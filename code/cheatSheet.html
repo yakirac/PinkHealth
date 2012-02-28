@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title></title>
+		<link type="text/css" href="css/custom-theme/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.12.custom.min.js"></script>
+              <script src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-page.js"></script>
+	</head>
+	<body>
+         <p>Information we can get from the SMART API</p>
+	
+	  <p>SMART.DEMOGRAPHICS_get</p>
+	  <ul id="name_list">
+ 	  </ul>
+ 
+	  <p>SMART.MEDS_get</p>
+ 	  <ul id="med_list">
+ 	  </ul>
+		
+	  <p>SMART.PROBLEMS_get</p>
+ 	  <ul id="problem_list">
+ 	  </ul> 
+
+	  <p>SMART.ALLERGIES_get</p>
+ 	  <ul id="allergy_list">
+ 	  </ul>
+	
+	  <p>SMART.LAB_RESULTS_get</p>
+ 	  <ul id="labresults_list">
+ 	  </ul>
+
+	  <p>SMART.NOTES_get(If patients had notes we would use this to get them)</p>
+ 	  <ul id="notes_list">
+ 	  </ul>
+
+ 
+ 	<script>
+		SMART.MEDS_get(function(meds) {
+     			var med_names = meds.where("?m rdf:type sp:Medication")
+                           .where("?m sp:drugName ?medc")
+                           .where("?medc dcterms:title ?t")
+			      .where("?m sp:fulfillment ?fill")
+                           .where("?fill dc:date ?fill_date");
+
+			var med_list = document.getElementById('med_list');
+   			med_names.each(function(i, single_med) {
+    			 	med_list.innerHTML += "<li> " + single_med.t + "</li>";
+				med_list.innerHTML += "<li> Fill Date: " + single_med.fill_date + "</li>";
+
+   			});
+
+   		});
+
+		SMART.DEMOGRAPHICS_get(function(rdf) {
+     			var person = rdf.where("?d rdf:type <http://xmlns.com/foaf/0.1/Person>")
+                           .where("?d <http://xmlns.com/foaf/0.1/givenName> ?fn")
+                           .where("?d <http://xmlns.com/foaf/0.1/familyName> ?ln")
+			      .where("?d <http://xmlns.com/foaf/0.1/gender> ?gender")
+			      .where("?d <http://smartplatforms.org/terms#birthday> ?dob");
+
+			var name_list = document.getElementById('name_list');
+			person.each(function(i, info){
+				name_list.innerHTML += "<li> FirstName " + info.fn + "</li>";
+				name_list.innerHTML += "<li> LastName " + info.ln + "</li>";
+				name_list.innerHTML += "<li> Gender " + info.gender + "</li>";
+				name_list.innerHTML += "<li> Date of Birth " + info.dob + "</li>";
+			});
+
+ 		 });
+
+		SMART.PROBLEMS_get(function(problems) {
+     			var problem_names = problems.where("?pr rdf:type sp:Problem")
+                           .where("?pr sp:problemName ?pn")
+                           .where("?pn dcterms:title ?p"); 
+
+			var problem_list = document.getElementById('problem_list');
+			problem_names.each(function(i, problem){
+				problem_list.innerHTML += "<li> " + problem.p + "</li>";
+			});
+  		}); 
+
+		SMART.ALLERGIES_get(function(allergies) {
+     			var allergy_names = allergies.where("?ac rdf:type sp:Allergy")
+                           .where("?ac sp:substance ?sub")
+                           .where("?sub dcterms:title ?allg"); 
+
+			var allergy_class = allergies.where("?al rdf:type sp:Allergy")
+			      .where("?al sp:class ?aclass")
+			      .where("?aclass dcterms:title ?allgClass");
+
+			var allergy_list = document.getElementById('allergy_list');
+
+			allergy_class.each(function(i, aClass){
+				allergy_list.innerHTML += "<li> " + aClass.allgClass + "</li>";
+			});
+
+			allergy_names.each(function(i, allergy){
+				allergy_list.innerHTML += "<li> " + allergy.allg + "</li>";
+			});
+
+  		});
+
+		SMART.LAB_RESULTS_get(function(labs) {
+     			var lab_results = labs.where("?lr rdf:type sp:LabResult")
+                           .where("?lr sp:labName ?ln")
+                           .where("?ln dcterms:title ?lt")
+			      .where("?lr sp:quantitativeResult ?qr")
+			      .where("?qr sp:valueAndUnit ?vau")
+			      .where("?vau sp:value ?v")
+			      .where("?vau sp:unit ?u");
+
+			var labresults_list = document.getElementById('labresults_list');
+			lab_results.each(function(i, lab){
+				labresults_list.innerHTML += "<li> " + lab.lt + "</li>";
+				labresults_list.innerHTML += "<li> " + lab.v + lab.u + "</li>";
+			});
+  		}); 
+	
+		SMART.NOTES_get(function(notes) {
+     			var dr_notes = notes.where("?n rdf:type sp:Note")
+                           .where("?n sp:timeofvisit ?tov")                         
+			      .where("?n sp:notes ?note"); 
+
+			var notes_list = document.getElementById('notes_list');
+			dr_notes.each(function(i, one_note){
+				<!--notes_list.innerHTML += "<li> Provider: " + one_note.pn + "</li>";-->
+				notes_list.innerHTML += "<li> Time of Visit: " + one_note.tov + "</li>";
+				notes_list.innerHTML += "<li> Note: " + one_note.note + "</li>";
+			});
+  		});
+
+
+
+
+ 	</script>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>PinkHealth: Breast Cancer Risk</title>
+	</head>
+	<body>
+	<h1>PinkHealth: Breast Cancer Risk Supplementary Information</h1>
+	<p>Dan Kestranek (dan.kestranek@gatech.edu)</p>
+	<p>Yakira Bristol (ybristol3@gatech.edu)</p>
+	<p>Dr. Mark Braunstein (mark.braunstein@cc.gatech.edu)</p>
+
+	<br />
+	<h2>Motivation</h2>
+	<p>Roughly one out of every eight women will get breast cancer in their lifetime. While a woman cannot change her genetic makeup that increases her risk of breast cancer, she can however, reduce her behavioral factors that contribute to her overall risk. Unfortunately, many women are not aware of their genetic risk for breast cancer, what behavior factors increase their risk of breast cancer, or by how much those behaviors increase their risk of breast cancer. We present PinkHealth, a SMART EMR-powered application that can inform women about their genetic and behavioral risks of breast cancer and provide means of helping motivate and track reducing their behavioral risks. PinkHealth is not meant to replace breast cancer self-checks or mammograms; instead, PinkHealth is a supplementary application to increase a woman’s awareness of breast cancer and provide an individualized experience as to what she can do to reduce her risk. PinkHealth is not meant to be used by men even though men can get breast cancer.</p>
+
+	<br />
+	<h2>Vision</h2>
+	<p>PinkHealth consists of five sections: one to assesses genetic risk, the second, personal behavior modifications, the third, tracking those personal behavior modifications, the fourth, integrating social networking, and the fifth, additional information regarding breast cancer.</p>
+	
+	<h3>My Risk</h3>
+	<p>Current breast cancer apps focus on self-check education or self-check reminders. PinkHealth takes a different approach. Users are first greeted with a landing page for a brief explanation of the app and motivation for using it. Then the user takes the National Cancer Institute’s breast cancer risk assessment tool to get a five year and lifetime prediction of her genetic risk of breast cancer compared to average women her age. Based on the results, the woman is encouraged to take different actions. If her lifetime risk is over 20%, she is encouraged to speak with her primary care physician immediately for counsel and to continue on to make her plan for reducing her behavioral risks of breast cancer. If her lifetime risk is between 10% and 20%, she is encouraged to speak with her doctor at her next regularly scheduled visit. If her risk is less than 10%, she is not encouraged (but not discouraged) to speak with her doctor; instead, she is encouraged to continue on to make her plan.</p>
+
+	<h3>My Plan</h3>
+	<p>My Plan is broken down into five categories describing the main behavioral factors influencing breast cancer risk: My Information, My Diet, My Exercise, My Alcohol Consumption, and My Tobacco Smoke. My Information assesses the user’s current weight, BMI (Body Mass Index), and if she takes oral contraceptives. After explaining how each category affects the user’s risk of breast cancer, the user answers questions to help define a baseline of her current state in each category. If she uses any existing online PHRs, or diet or exercise tracking websites, she can sign into those to auto-populate the assessment questions in each tab.</p>
+
+	<h3>My Progress</h3>
+	<p>My Progress shows the same five categories as My Plan to let the user track her progress in reducing each one. She is again prompted to sign into existing services to auto-populate the tracking functions. If she is not using any existing services on the Internet, she can manually enter information in PinkHealth in the basic logger for each category. After entering her daily progress, she sees a summary graph showing her progress. As she reduces her risk in each category, she gains personalized achievements recognizing her progress and motivating her to continue reducing her behavioral risks of breast cancer.</p>
+
+	<h3>My Community</h3>
+	<p>My Community provides social motivation from the user’s friends and family on an unconditional opt-in-only basis. PinkHealth integrates with Twitter, Facebook, Susan G. Komen, and the American Cancer Society’s Cancer Survivor Network. Twitter and Facebook integration includes announcing earned achievements. Facebook has the added component of comparing the user’s progress against her friends’ progress if they also use PinkHealth. Susan G. Komen integration provides a window to the vast amounts of information on the Susan G. Komen site and the forums. The American Cancer Society’s Survivor Network provides a conduit for high-risk of breast cancer women to connect with cancer survivors for motivation in changing their behaviors to reduce their behavioral risks.</p>
+
+	<h3>Additional Health Information</h3>
+	<p>Additional Health Information provides FAQs about breast cancer, screening guidelines, and what to do if you think that you have breast cancer. FAQs addresses common questions and misinformation about breast cancer such as, “Is breast cancer contagious?” Screening guidelines give an overview of screening methods: self-examination, clinical breast examination, and mammography. The final section about what to do if you think that you have breast cancer encourages the user to see her primary care physician. If she does not feel that her primary doctor is sufficient, she can use the “Find a Doctor” tool to find a doctor near her location that specializes in breast cancer patients.</p>
+
+	<br />
+	<h2>Progress</h2>
+	<p>Currently PinkHealth has the following implemented. These are important because they provide the baseline functionality to convey the gist of our approach to reducing a woman’s behavioral risk of breast cancer:<p>
+
+	<ul>
+		<li>National Cancer Institute’s breast cancer risk assessment tool</li>
+		<li>Pull user’s age from EMR</li>
+		<li>Basic weight, diet, exercise, and alcohol logging features</li>
+		<li>Twitter integration to send Tweets from inside PinkHealth</li>
+		<li>Information regarding breast cancer</li>
+		<li>FAQs about breast cancer and screening guidelines</li>
+	</ul>
+	
+	
+	<p>In future months, we will add in these features:</p>
+	
+	<ul>
+		<li>Pull current breast cancer status (for auto-populating risk assessment tool) from SMART EMR</li>
+		<li>Pull current medications and check for oral contraceptives from SMART EMR</li>
+		<li>Integrate with PHRs (Google Health, etc.) to auto-populate risk assessment tool, My Plan, and My Progress and potentially feed data back into SMART EMR</li>
+		<li>Integrate with existing diet/exercise tracking websites to pull from and push to (if applicable)</li>
+		<li>Tracking quitting smoking</li>
+		<li>Integrate with existing websites to help quit smoking</li>
+		<li>Gaming mechanic – achievements for reaching personalized milestones in reducing behavioral risks</li>
+		<li>Automatic Tweets and Facebook posts for achieving achievements</li>
+		<li>Function to find a doctor near you that is experienced with breast cancer</li>
+		<li>Mobile focused version of PinkHealth</li>
+		<li>Integrate with Susan G. Komen and the American Cancer Society’s Cancer Survivor Network</li>
+		<li>Integrate with the American Cancer Society’s mammogram email reminder tool</li>
+		<li>Further UI tweaks</li>
+	</ul>
+	
+	
+	</body>
+</html>

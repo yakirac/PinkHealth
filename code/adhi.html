@@ -1,0 +1,136 @@
+		<script type="text/javascript">
+			$(function(){
+
+				// Accordion
+				$("#adhiaccordion").accordion({
+                	            header: "h3",
+                	            autoHeight: false,
+                	            collapsible: true
+                                });
+				
+				//showadhi();
+                                
+
+			});
+		</script>
+
+	  <!--<li><a href="cheatSheet.html">SMART API information</a></li><br />-->
+
+		<div id="adhiaccordion">
+
+			<div>
+			  <h3><a href="#">FAQs</a></h3>
+			    
+			    <div>
+			      <p>Common misinformation (myths) about what causes breast cancer</p>
+			      <!--<p>page 10 in quick fact pdf has some misinformations</p>-->
+			      <div class="ui-widget-header-green ui-corner-all" style="float: left; width: 500px;">
+				<p>Is breast cancer contagious?</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-pink ui-corner-all" style="float: center; width: 800px;">
+				<p>A healthy person cannot "catch" cancer from someone who has it. There is no evidence that close contact or things like sex, kissing, touching, sharing meals, or breathing the same air can spread cancer from one person to another. Cancer cells from one person are generally unable to live in the body of another healthy person. The healthy person's immune system recognizes the cancer cells and destroys them.</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-green ui-corner-all" style="float: left; width: 500px;">
+				<p>Can breast cancer spread if it is exposed to air during surgery?</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-pink ui-corner-all" style="float: center; width: 800px;">
+				<p>Some people may believe this because they often feel worse after the operation than they did before. It is normal to feel this way when you start to recover from any surgery. And sometimes, no one knows that the cancer has spread until it is seen during surgery. Because of this, some people may link surgery with widespread cancer. But cancer does not spread because it has been exposed to air. If you put off or refuse surgery because of this myth, you may be harming yourself by passing up treatment.</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-green ui-corner-all" style="float: left; width: 500px;">
+				<p>Do personal hygiene products, like shampoo, deodorant, and antiperspirants cause breast cancer?</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-pink ui-corner-all" style="float: center; width: 800px;">
+				<p>Studies to date have not found increased concentrations of organochlorines, when measured in adults, to be related to breast cancer risk.A carefully designed epidemiologic study of this issue compared 813 women with breast cancer and 793 women without the disease found no relationship between breast cancer risk and antiperspirant use, deodorant use, or underarm shaving.</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-green ui-corner-all" style="float: left; width: 500px;">
+				<p>Do underwire bras and breast implants cause breast cancer?</p>
+			      </div>
+			      <br /><br />
+			      <div class="ui-widget-header-pink ui-corner-all" style="float: center; width: 800px;">
+				<p>Two anthropologists made this association in a book called Dressed to Kill. Their study was not conducted according to standard principles of epidemiological research and did not take into consideration other variables, including known risk factors for breast cancer.  Silicone breast implants can cause scar tissue to form in the breast, but studies have found that this does not increase breast cancer risk. If you have breast implants, you might need special x-ray pictures during mammograms. </p>
+			      </div>
+
+			      <p><a href="http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-treating-c-a-m" target="_blank">Information about Holistic Medicine</a></p>
+
+			      <p><i>American Cancer Society. Breast Cancer Facts & Figures 2009-2010. Atlanta: American Cancer Society, Inc.</i></p>
+
+				</div> <!-- /misinformation inner -->
+			</div> <!-- /misinformation -->
+
+			<div>
+			  <h3><a href="#">Screening guidelines</a></h3>
+			    <div>
+			      <p>Screening guidelines</p>
+			      <!--<p>page 16 in quick fact pdf has screening guidelines</p>-->
+			      <table style="width:700px; border-width:0;" class="ui-widget-header ui-corner-all ui-state-active">
+				    <tr>
+				      <th>Breast Self-Examination: </th>
+				      <td><p>Beginning in their early 20s, women should be told about the benefits and limitations of breast self-examination (BSE). The importance of prompt reporting of any new breast symptoms to a health professional should be emphasized. Women who choose to do BSE should receive instruction and have their technique reviewed on the occasion of a periodic health examination. It is acceptable for women to choose not to do BSE or to do BSE irregularly.</p></td>
+				    </tr>
+				    <tr>
+				      <th>Clinical Breast Examination:</th>
+				      <td><p>For women in their 20s and 30s, it is recommended that clinical breast examination (CBE) be part of a periodic health examination, preferably at least every three years. Asymptomatic women aged 40 and over should continue to receive a clinical breast examination as part of a periodic health examination, preferably annually and prior to mammography.</p></td>
+				    </tr>
+				    <tr>
+				      <th>Mammography:</th>
+				      <td>Begin annual mammography at age 40.  <a href="http://acsremindme.com/hma/modify_subscription.php?CID=288" target="_blank">ACS Mammogram reminder email tool</a></td>
+				    </tr>
+				    
+				  </table>
+
+				  <p><i>American Cancer Society. Breast Cancer Facts & Figures 2009-2010. Atlanta: American Cancer Society, Inc.</i></p>
+			    </div> <!-- /screening inner -->
+			</div> <!-- /screening -->
+
+			<div>
+			  <h3><a href="#">What should I do if I think I have breast cancer?</a></h3>
+			    <div>
+			      <p>If you think you have breast cancer, please discuss with your doctor preventative measures or ways to treat breast cancer</p>
+			    </div> <!-- /havecancer inner -->
+			</div> <!-- /havecancer -->
+
+		</div> <!-- /adhiaccordion -->
+	
+	  <!--<p>SMART.DEMOGRAPHICS_get</p>
+	  <ul id="name_list">
+ 	  </ul>
+ 
+	  <p>SMART.MEDS_get</p>
+ 	  <ul id="med_list">
+ 	  </ul>
+ 
+ 	<script>
+  		SMART.MEDS_get(function(meds) {
+   			var med_names = meds.where("?medication rdf:type sp:Medication")
+     				.where("?medication sp:drugName ?drug_name_code")
+     				.where("?drug_name_code dcterms:title ?drugname");
+     
+   			var med_list = document.getElementById('med_list');
+   			med_names.each(function(i, single_med) {
+    			 	med_list.innerHTML += "<li> " + single_med.drugname + "</li>";
+   			});
+ 		});
+
+		SMART.DEMOGRAPHICS_get(function(rdf) {
+     			var person = rdf.where("?d rdf:type <http://xmlns.com/foaf/0.1/Person>")
+                           .where("?d <http://xmlns.com/foaf/0.1/givenName> ?fn")
+                           .where("?d <http://xmlns.com/foaf/0.1/familyName> ?ln")
+			      .where("?d <http://xmlns.com/foaf/0.1/gender> ?gender")
+			      .where("?d <http://smartplatforms.org/terms#birthday> ?dob");
+
+			var name_list = document.getElementById('name_list');
+			person.each(function(i, info){
+				name_list.innerHTML += "<li> FirstName " + info.fn + "</li>";
+				name_list.innerHTML += "<li> LastName " + info.ln + "</li>";
+				name_list.innerHTML += "<li> Gender " + info.gender + "</li>";
+				name_list.innerHTML += "<li> Date of Birth " + info.dob + "</li>";
+			});
+
+ 		 });
+ 	</script>-->

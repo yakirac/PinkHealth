@@ -1,0 +1,636 @@
+<script type="text/javascript">
+	//google.setOnLoadCallback(drawChart);
+
+	//This works!
+	function weightchart( data ) {
+
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('weight_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'Weight Over a Month'});
+		});
+
+	} //weightchart
+
+	function calconsumedchart( data ) {
+
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('calconsumed_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'Calories Consumed Over a Month'});
+		});
+		
+	} //calconsumechart
+	
+	function drinkschart( data ) {
+
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('drinks_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'Alcoholic Drinks Consumed Over a Month'});
+		});
+		
+	} //drinkschart
+	
+	function bmichart( data ) {
+
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('bmi_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'BMI Over a Month'});
+		});
+		
+	} //bmichart
+	
+	function exminchart( data ) {
+	
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('exmin_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'Minutes Exercised Over a Month'});
+		});
+	
+	} //exminchart
+	
+	function calburnedchart( data ) {
+	
+		$(function() {
+			var chart = new google.visualization.LineChart(document.getElementById('calburned_chart_div'));
+			chart.draw(data, {width: 400, height: 240, title: 'Calories Burned Over a Month'});
+		});
+	
+	} //calburnedchart
+	
+	
+	/*function showalccal() {
+	
+	var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		$('#alc_calendar').fullCalendar({
+			theme: false,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			events: [
+				{
+					title: 'All Day Event',
+					start: new Date(y, m, 1),
+					color: '#f2859d'
+				},
+				{
+					title: 'Long Event',
+					start: new Date(y, m, d-5),
+					end: new Date(y, m, d-2)
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d-3, 16, 0),
+					allDay: false
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d+4, 16, 0),
+					allDay: false
+				},
+				{
+					title: 'Meeting',
+					start: new Date(y, m, d, 10, 30),
+					allDay: false
+				},
+				{
+					title: 'Lunch',
+					start: new Date(y, m, d, 12, 0),
+					end: new Date(y, m, d, 14, 0),
+					allDay: false
+				},
+				{
+					title: 'Birthday Party',
+					start: new Date(y, m, d+1, 19, 0),
+					end: new Date(y, m, d+1, 22, 30),
+					allDay: false
+				},
+				{
+					title: 'Click for Google',
+					start: new Date(y, m, 28),
+					end: new Date(y, m, 29),
+					url: 'http://google.com/'
+				}
+			]
+		});
+	
+	} //showalccal */
+
+	$(function(){
+
+		// Accordion
+		$("#progressaccordion").accordion({
+        	header: "h3",
+        	autoHeight: false,
+        	collapsible: true
+        });
+		
+		// Dialog
+		$("#bmidialog2").dialog ({
+			autoOpen: false,
+			width: 1000
+		});
+		$("#bmilink2").click(function() {
+			$("#bmidialog2").dialog("open");
+				return false;
+		});
+
+
+		$("#intensity_today").buttonset();
+		
+		var d=new Date();
+		//alert(d.toDateString());
+		
+		var infodate = document.getElementById("info_date");
+		infodate.innerHTML += d.toDateString();
+		
+		//$("#submit_weight_today").button();
+		$("#submit_weight_today").click(function() {
+			
+			if (typeof(SMART) != "undefined")
+			{
+				//alert("Weight for today submitted!");
+				
+				var weight = $("#weight_today").val();
+				weight *= 0.45359237;
+				
+				var height = document.getElementById( 'heightholder' ).innerHTML;
+				
+				var bmi = weight / (height * height);
+				bmi = Math.round(bmi*10)/10;
+				
+				var url = "http://web.cip.gatech.edu/~preventbc/progress.php?action=addweight&id=" + SMART.record.id + "&weight=" + weight + "&bmi=" + bmi;
+				
+				//alert(url);
+				
+				document.getElementById( 'tweight' ).innerHTML = $("#weight_today").val() + " lbs";
+				document.getElementById( 'tbmi' ).innerHTML = " " + bmi + " BMI";
+				$("#tweight_div").removeClass("hidden");
+				
+				$.getJSON(url, function(data) {
+					graphtodayweight();
+				});
+			}
+		}); //$("#submit_weight_today").click()
+		     
+		$("#submit_alcohol_today").click(function() {
+			if (typeof(SMART) != "undefined")
+			{
+				//alert("Alcohol submitted! [NOT HOOKED UP YET!]");
+				
+				var drinks = $("#alcohol_today").val();
+				
+				var url = "http://web.cip.gatech.edu/~preventbc/progress.php?action=addalcohol&id=" + SMART.record.id + "&drinks=" + drinks;
+				
+				//alert(url);
+				
+				document.getElementById( 'talcohol' ).innerHTML = drinks + " drinks";
+				$("#talcohol_div").removeClass("hidden");
+				
+				$.getJSON(url, function(data) {
+					graphtodayalcohol();
+				}); //$.getJSON()
+				
+				
+			}
+		}); //$("#submit_alcohol_today").click()
+		
+		$("#submit_cal_consumed_today").click(function() {
+			if (typeof(SMART) != "undefined")
+			{
+				//alert("Calories consumed submitted! [NOT HOOKED UP YET!]");
+				
+				var calories = $("#cal_consumed_today").val();
+				
+				document.getElementById( 'tcalconsumed' ).innerHTML =  calories + " calories";
+				$("#tcalconsumed_div").removeClass("hidden");
+				
+				var url = "http://web.cip.gatech.edu/~preventbc/progress.php?action=addcalconsumed&id=" + SMART.record.id + "&calories=" + calories;
+				
+				//alert(url);
+				
+				$.getJSON(url, function(data) {
+					graphtodaycalconsumed();
+				});
+			}
+		}); //$("#submit_cal_consumed_today").click()
+		
+		$("#submit_minutes_today").click(function() {
+			if (typeof(SMART) != "undefined")
+			{
+				//alert("Minutes exercised submitted! [NOT HOOKED UP YET!]");
+				
+				var minutes = $("#minutes_today").val();
+				
+				if (minutes == "")
+				{
+					//alert("Minutes = empty");
+					minutes = 0;
+				}
+				
+				var url = "http://web.cip.gatech.edu/~preventbc/progress.php?action=addexmin&id=" + SMART.record.id + "&minutes=" + minutes;
+				var intensity = "mild";
+				
+				if ($("#intensity_today_mild").attr("checked") == false && $("#intensity_today_moderate").attr("checked") == false && $("#intensity_today_strenuous").attr("checked") == false)
+				{
+					//alert("No intensity selected!");
+					
+					url += "&intensity=0";
+				}
+				else if ($("#intensity_today_mild").attr("checked") == true)
+				{
+					url += "&intensity=0";
+				}
+				else if ($("#intensity_today_moderate").attr("checked") == true)
+				{
+					url += "&intensity=1";
+					intensity = "moderate";
+				}
+				else if ($("#intensity_today_strenuous").attr("checked") == true)
+				{
+					url += "&intensity=2";
+					intensity = "strenuous";
+				}
+				
+				//alert(url);
+				
+				document.getElementById( 'tminutes' ).innerHTML = minutes + " minutes at " + intensity + " intensity";
+				$("#tminutes_div").removeClass("hidden");
+				
+				$.getJSON(url, function(data) {
+					graphtodayexminutes();
+				});
+				
+			}
+		}); //$("#submit_minutes_today").click()
+		
+		$("#submit_caloriesburned_today").click(function() {
+			if (typeof(SMART) != "undefined")
+			{
+				//alert("Calories burned submitted! [NOT HOOKED UP YET!]");
+				
+				var calories = $("#caloriesburned_today").val();
+				if (calories == "")
+				{
+					calories = 0;
+				}
+				
+				var url = "http://web.cip.gatech.edu/~preventbc/progress.php?action=addcalburned&id=" + SMART.record.id + "&calories=" + calories;
+				
+				document.getElementById( 'tcalburned' ).innerHTML = calories + " calories";
+				$("#tcalburned_div").removeClass("hidden");
+				
+				$.getJSON(url, function(data) {
+					graphtodaycalburned();
+				});
+			}
+		}); //$("#submit_caloriesburned_today").click()
+		
+		
+		
+		
+		
+		
+	});// $(function())
+</script>
+
+<h2 class="demoHeaders">My Progress</h2>
+<p id="info_date">Today's date is </p>
+
+<div id="progressaccordion">
+
+	<div>
+	  <h3><a href="#">My Information</a></h3>
+	  <div>
+		<p id="height_missing" class="hidden">Please enter your height in the "My Plan" tab.</p>
+		<p id="weight_missing" class="hidden">Please enter your weight in the "My Plan" tab.</p>
+		<div id="baseinfo" class="hidden">
+		
+			<div style="float: left;"> <!-- today's info -->
+				
+				<div style="float:left;">
+					<div id="weight_today_div" class="ui-widget-header ui-corner-all" style="padding-left: 0.5em; padding-right: 0.5em;">
+						Today's weight:
+						<input type="text" id="weight_today" style="width: 3em;"></input>
+						lbs
+					</div>
+				</div>
+				
+				<button id="submit_weight_today" style="float:left; margin-left: 1em;">Submit weight</button>
+				<br /><br />
+				
+				<div id="tweight_div" class="ui-widget-header ui-corner-all ui-state-active hidden" style="padding-left: 0.5em; padding-right: 0.5em;">Today's weight submitted! <span id="tweight"></span>,<span id="tbmi"></span></div>
+				<br /><br />
+				
+				<div id="weight_chart_div"></div>
+				<br />
+				<div id="bmi_chart_div"></div>
+				
+			
+			</div> <!-- /today's info -->
+			
+		
+		
+			<div style="float: right;"> <!-- bmi info -->
+				<div class="ui-widget-header-green ui-corner-all" style="width:300px;">
+				
+					<div id="heightholder" class="hidden"></div>
+					<table style="width: 300px;">
+						<tr>
+							<td>Height:</td>
+							<td id="start_height"></td>
+						</tr>
+						<tr>
+							<td>Starting weight:</td>
+							<td id="start_weight"></td>
+						</tr>
+						<tr>
+							<td>Starting BMI:</td>
+							<td id="start_bmi"></td>
+						</tr>
+						<tr>
+							<td>Classification:</td>
+							<td id="start_classification"></td>
+						</tr>
+						<tr>
+							<td>Goal weight:</td>
+							<td id="info_weight_goal"></td>
+						</tr>
+					</table>	  
+				</div> 
+				
+				<br />
+				
+				<table style="width:400px; border-width:0;" class="ui-widget-header ui-corner-all ui-state-active">
+					<caption style="text-align: left; color: black;"><a href="#bmidialog2" id="bmilink2" style="color: black; text-decoration: underline;">BMI</a> for adults age 20 and older</caption>
+					<tr>
+					  <td><strong>BMI</strong></td>
+					  <td><strong>Classification</strong></td>
+					</tr>
+					<tr id="bmi0">
+					  <td>&lt;18.5</td>
+					  <td>underweight</td>
+					</tr>
+					<tr id="bmi1">
+					  <td>18.5 to 24.9</td>
+					  <td>healthy</td>
+					</tr>
+					<tr id="bmi2">
+					  <td>25.0 to 29.9</td>
+					  <td>overweight</td>
+					</tr>
+					<tr id="bmi3">
+					  <td>&gt;30.0</td>
+					  <td>obese</td>
+					</tr>
+				</table>
+			</div> <!-- /bmi info -->
+			
+		</div> <!-- /baseinfo -->
+		
+	  </div> <!-- /myinfo inner -->
+	</div> <!-- /myinfo -->
+	
+	<div id="bmidialog2" title="Body Mass Index (BMI)">
+			  <p>A measure of body fat based on height and weight that applies to adult men and women.</p>
+			  <p><i>BMI = weight (kg) / height<sup>2</sup> (m<sup>2</sup>)</i></p>
+			  <p>http://www.nhlbisupport.com/bmi/</p>
+		</div> <!-- /bmidialog2 -->
+
+	<div>
+		<h3><a href="#">My Diet</a></h3>
+		<div>
+		
+			<div style="float: left;"> <!-- today's info -->
+				
+				<div style="float:left;">
+					<div id="cal_consumed_today_div" class="ui-widget-header ui-corner-all" style="padding-left: 0.5em; padding-right: 0.5em;">
+						Today, I consumed 
+						<input type="text" id="cal_consumed_today" style="width: 3em;"></input>
+						calories.
+					</div>
+				</div>
+				
+				<button id="submit_cal_consumed_today" style="float:left; margin-left: 1em;">Submit calories consumed</button>
+				<br /><br />
+				
+				<div id="tcalconsumed_div" class="ui-widget-header ui-corner-all ui-state-active hidden" style="padding-left: 0.5em; padding-right: 0.5em; float: left;">Today's calories consumed submitted! <span id="tcalconsumed"></span></div>
+				<br /><br />
+				
+				<div id="calconsumed_chart_div"></div>
+			
+			</div> <!-- /today's info -->
+		
+		
+		</div> <!-- /mydiet inner -->
+	</div> <!-- /mydiet -->			
+
+	<div>
+		<h3><a href="#">My Exercise</a></h3>
+		<div>
+		
+			<div style="float: left;"> <!-- today's info -->
+				
+				<div>
+					<div id="minutes_today_div" class="ui-widget-header ui-corner-all" style="float: left; padding-left: 0.5em; padding-right: 0.5em;">
+						Today, I exercised for
+						<input type="text" id="minutes_today" style="width: 3em;"></input>
+						minutes.
+					</div>
+					
+					<br /><br />
+					
+					<span id="intensity_today">
+						<input type="radio" id="intensity_today_mild" name="intensity_today" /><label for="intensity_today_mild">Mild</label>
+						<input type="radio" id="intensity_today_moderate" name="intensity_today" /><label for="intensity_today_moderate">Moderate</label>
+						<input type="radio" id="intensity_today_strenuous" name="intensity_today" /><label for="intensity_today_strenuous">Strenuous</label>
+					</span> <!-- /intensity_today -->
+					
+					<button id="submit_minutes_today" style="margin-left: 1em;">Submit exercise minutes</button>
+					<br /><br />
+					
+					
+					<div id="tminutes_div" class="ui-widget-header ui-corner-all ui-state-active hidden" style="padding-left: 0.5em; padding-right: 0.5em; float: left;">Today's exercise minutes submitted!<br /><span id="tminutes"></span></div>
+					<br />
+					
+				</div>
+
+		
+				<br />
+				
+				<div id="exmin_chart_div"></div>
+				<br /><br />
+				
+				
+				
+				<div style="float:left;">
+					<div id="caloriesburned_today_div" class="ui-widget-header ui-corner-all" style="padding-left: 0.5em; padding-right: 0.5em;">
+						Today, I burned
+						<input type="text" id="caloriesburned_today" style="width: 3em;"></input>
+						calories.
+					</div>
+				</div>
+				
+				<button id="submit_caloriesburned_today" style="float:left; margin-left: 1em;">Submit calories burned</button>
+				<br /><br />
+				
+				<div id="tcalburned_div" class="ui-widget-header ui-corner-all ui-state-active hidden" style="padding-left: 0.5em; padding-right: 0.5em; float: left;">Today's calories burned submitted! <span id="tcalburned"></span></div>
+				<br />
+				
+				<div id="calburned_chart_div"></div>
+			
+			</div> <!-- /today's info -->
+			
+			
+			<div style="float: right;"> <!-- exercise info -->
+				<div class="ui-widget-header-green ui-corner-all" style="width: 500px;">
+				
+					<table style="width: 500px;">
+						<caption>Initial Godin-Shephard Score</caption>
+						<tr>
+							<td>Strenuous exercise:</td>
+							<td id="start_strenuous"></td>
+						</tr>
+						<tr>
+							<td>Moderate exercise:</td>
+							<td id="start_moderate"></td>
+						</tr>
+						<tr>
+							<td>Mild exercise:</td>
+							<td id="start_mild"></td>
+						</tr>
+						<tr>
+							<td>Godin-Shephard Score:</td>
+							<td id="start_godin"></td>
+						</tr>
+					</table>	
+					
+				</div> 
+				
+				<br />
+				
+				<div class="ui-widget-header ui-corner-all ui-state-active">
+					<table style="width:500px;">
+						<caption>Current Godin-Shephard Score (Past 7 Days)</caption>
+						<tr>
+							<td>Strenuous exercise:</td>
+							<td id="current_strenuous"></td>
+						</tr>
+						<tr>
+							<td>Moderate exercise:</td>
+							<td id="current_moderate"></td>
+						</tr>
+						<tr>
+							<td>Mild exercise:</td>
+							<td id="current_mild"></td>
+						</tr>
+						<tr>
+							<td>Godin-Shephard Score:</td>
+							<td id="current_godin"></td>
+						</tr>
+					</table>
+				</div>
+				
+			</div> <!-- /exercise info -->
+		
+		</div> <!-- /myexercise inner -->
+	</div> <!-- /myexercise -->	
+
+	<div>
+		<h3><a href="#">My Alcohol Consumption</a></h3>
+		<div>
+		
+		<div style="float: left;"> <!-- today's info -->
+				
+				<div style="float:left;">
+					<div id="alcohol_today_div" class="ui-widget-header ui-corner-all" style="padding-left: 0.5em; padding-right: 0.5em;">
+						Today, I had 
+						<input type="text" id="alcohol_today" style="width: 3em;"></input>
+						alcoholic drinks.
+					</div>
+				</div>
+				
+				<button id="submit_alcohol_today" style="float:left; margin-left: 1em;">Submit drinks</button>
+				<br /><br />
+				
+				<div id="talcohol_div" class="ui-widget-header ui-corner-all ui-state-active hidden" style="padding-left: 0.5em; padding-right: 0.5em; float: left;">Today's drinks submitted! <span id="talcohol"></span></div>
+				<br /><br />
+				
+				<div id="drinks_chart_div"></div>
+			
+			</div> <!-- /today's info -->
+			
+			
+			<div style="float: right;"> <!-- alcohol info -->
+				<div class="ui-widget-header-green ui-corner-all" style="width: 500px;">
+				
+					<table style="width: 500px;">
+						<caption>Initial Average Alcohol Consumption</caption>
+						<tr>
+							<td>How often you have a drink:</td>
+							<td id="start_often_drink"></td>
+						</tr>
+						<tr>
+							<td>How many drinks in a day:</td>
+							<td id="start_day_drink"></td>
+						</tr>
+						<tr>
+							<td>How often you have 5 or more drinks:</td>
+							<td id="start_five_drink"></td>
+						</tr>
+						<!--<tr>
+							<td>Godin-Shephard Score:</td>
+							<td id="start_godin"></td>
+						</tr>-->
+					</table>	
+					
+				</div> 
+				
+				<br />
+				
+				<!--<div class="ui-widget-header ui-corner-all ui-state-active">
+					<table style="width:500px;">
+						<caption>Current Average Alcohol Consumption</caption>
+						<tr>
+							<td>Strenuous exercise:</td>
+							<td id="current_strenuous"></td>
+						</tr>
+						<tr>
+							<td>Moderate exercise:</td>
+							<td id="current_moderate"></td>
+						</tr>
+						<tr>
+							<td>Mild exercise:</td>
+							<td id="current_mild"></td>
+						</tr>
+						<tr>
+							<td>Godin-Shephard Score:</td>
+							<td id="current_godin"></td>
+						</tr>
+					</table>
+				</div>-->
+				
+				<div id='alc_calendar'></div>
+				
+			</div> <!-- /alcohol info -->
+		
+		
+		</div> <!-- /myalcohol inner -->
+	</div> <!-- /myalcohol -->
+
+	<!--<div>
+	  <h3><a href="#">My Tobacco Smoke</a></h3>
+	  <div>
+		<p>Smoking!</p>
+	  </div> <!-- /mytobacco inner -->
+	<!--</div> <!-- /mytobacco -->
+
+</div> <!-- /progressaccordion -->
+

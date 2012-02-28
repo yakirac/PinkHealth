@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>PinkHealth: Breast Cancer Risk</title>
+		<link type="text/css" href="css/custom-theme/jquery-ui-1.8.12.custom.css" rel="stylesheet" />
+		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<link type="text/css" href="css/dan.css" rel="stylesheet" />
+		<!--<link type="text/css" href="css/fullcalendar.css" rel="stylesheet" />
+		<link type="text/css" href="css/fullcalendar.print.css" rel="stylesheet" media="print" />-->
+		<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.12.custom.min.js"></script>
+		<script type="text/javascript" src="js/bc.js"></script>
+              <script src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-page.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});</script> 
+		<!--<script type="text/javascript" src="js/fullcalendar.min.js"></script>-->
+		<script src="http://platform.twitter.com/anywhere.js?id=FyHyViIKUNx3df24P9Zisw&v=1" type="text/javascript"></script>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+		<script>
+			FB.init({ 
+				appId:'175243902528862', cookie:true, 
+				status:true, xfbml:true 
+			});
+		</script>
+
+
+		
+		<script type="text/javascript">
+			var age;
+			
+			
+			
+			$(function(){
+				
+				// Tabs
+				$('#tabs').tabs();
+
+				$('#tabs').tabs({
+					show: function(event, ui) {
+						//alert("ui index = " + ui.index);
+
+						if(ui.index == 1)
+						{
+							showrat();
+						}
+
+						if(ui.index == 2)
+						{
+							showplan();
+						}
+						if(ui.index == 3)
+						{
+							showprogress();
+							
+						}
+					}
+				});
+	
+
+
+				//hover states on the static widgets
+				$('#dialog_link, ul#icons li').hover(
+					function() { $(this).addClass('ui-state-hover'); }, 
+					function() { $(this).removeClass('ui-state-hover'); }
+				);
+
+				SMART.DEMOGRAPHICS_get(function(rdf) {
+					var dob;
+					var person = rdf.where("?d <http://smartplatforms.org/terms#birthday> ?dob");
+					person.each(function(i, info){
+						dob = info.dob;
+					});
+	
+					var d=new Date();
+
+					dob = dob.value.substring(0, 4);
+					var age = d.getFullYear() - parseInt(dob);
+
+					document.getElementById('name').innerHTML = SMART.record.full_name + "<br />Patient ID: " + SMART.record.id + "<br />Age: " + age;
+				});
+
+
+			});
+
+			
+		</script>
+	</head>
+	<body>
+		<!-- Tabs -->
+		<div id="patientcard">
+			<!--<h2 class="demoHeaders">Breast Cancer Risk</h2>-->
+			<span id="name" style="float: left;"></span>
+			<h2><img src="images/PinkHealth text big2.png" width="500" height="160" align="middle"/></h2>
+			<!-- Can show stuff like stats - weight, achievements, etc. Can we get this box to be gradiented? Perhaps a giant jquery ui toolbar with a pink/purple color theme? -->
+		</div>
+		<div id="tabs">
+			<ul>
+				<li><a href="start.html">Start</a></li>
+				<li><a href="risk.html">My Risk</a></li>
+				<li><a href="plan.html">My Plan</a></li>
+				<li><a href="progress.html">My Progress</a></li>
+				<li><a href="community.html">My Community</a></li>
+				<li><a href="adhi.html">Additional Health Information</a></li>
+			</ul>
+		</div> <!-- /tabs -->
+	<script>
+		/*document.getElementById('name').innerHTML = SMART.record.full_name + "<br />Patient ID: " + SMART.record.id + "<br />Age: " + age;*/
+	</script>
+	</body>
+</html>
+
+

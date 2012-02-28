@@ -1,0 +1,61 @@
+.ui-widget-header-red {
+	border: 1px solid #B92D23;
+	background: #E3372B url(images/ui-red.png) 50% 50% repeat-x;
+	color: white;
+	font-weight: bold;
+}
+
+.ui-widget-header-green {
+	border: 1px solid #588E23;
+	background: #7BC631 url(images/ui-green.png) 50% 50% repeat-x;
+	color: white;
+	font-weight: bold;
+}
+
+.ui-widget-header-pink {
+	border: 1px solid #CA6F83;
+	background: #F2859D url(images/ui-pink.png) 50% 50% repeat-x;
+	color: white;
+	font-weight: bold;
+}
+
+.ui-widget-header-purple {
+	border: 1px solid #48164C;
+	background: #6A2071 url(images/ui-purple.png) 50% 50% repeat-x;
+	color: white;
+	font-weight: bold;
+}
+
+.button-pink {
+	border: 1px solid #C53C6D;
+	background: #F24287 url(images/pinkbutton.png) 50% 50% repeat-x;
+	font-weight: bold;
+	color: white;
+	outline: none;
+}
+
+.button-pink:hover {
+	border: 1px solid #c6718f;
+	background: #e7a3bb url(images/pinkbutton-hover.png) 50% 50% repeat-x;
+	font-weight: bold;
+	color: #ffffff;
+	outline: none;
+}
+
+.button-pink-active {
+	border: 1px solid #c6718f; 
+	background: #ffe9f1 url(images/pinkbutton-active.png) 50% 50% repeat-x; 
+	font-weight: bold; 
+	color: #6a2071; 
+	outline: none;
+}
+
+#alc_calendar {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.ui-tabs .ui-tabs-hide {
+    position: absolute;
+    left: -10000px;
+}

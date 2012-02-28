@@ -1,0 +1,66 @@
+#patientcard
+{
+	//background-color: #ffa6da;
+	border-radius: 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #6a2071;
+	//height: 180px;
+	margin: 0 0 5px 0;
+	//padding: 15px 50px 0 50px;
+	box-shadow: 0px 1px 8px #888888;
+	-webkit-box-shadow: 0px 1px 8px #888888; /* Safari */
+}
+
+#patientcard h2
+{
+	text-align: center;
+	color: #6a2071;
+}
+
+#patientcard #name
+{
+	color: #6a2071;
+}
+
+.hidden
+{
+	display: none;
+}
+
+#tweets  { 
+     width: 380px; 
+     background-color: #FFB6C1; 
+     height: 600px;
+     border:2px solid #FFC0CB;
+     border-radius:25px;
+     -moz-border-radius:25px;
+}
+
+#tweets li p  { 
+     padding: 0 0 15px; 
+}
+#tweets p a:link, #tweets p a:active, #tweets p a:visited  { 
+     color: #6fb2cd; 
+     text-decoration: none; 
+}
+#tweets p a:hover  { 
+     text-decoration: underline; 
+}
+
+#tweets ul    {
+     width: 350px;
+     height: auto;
+     padding: 15px 15px 0 15px;
+     margin: 0;
+}
+#tweets li    {
+     float: left;
+     margin: 5px 0;
+     padding:10px 30px;
+     background-color: #FFC0CB;
+     border:2px solid #FFC0CB;
+     border-radius:25px;
+     -moz-border-radius:25px;
+}
+

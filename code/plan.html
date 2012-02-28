@@ -1,0 +1,667 @@
+<script type="text/javascript">
+	$(function(){
+
+		// Accordion
+		$("#planaccordion").accordion({
+	       	header: "h3",
+	       	autoHeight: false,
+           	collapsible: true
+        });
+
+		//showplan();
+				
+		// Dialog
+		$("#bmidialog").dialog ({
+			autoOpen: false,
+			width: 1000
+		});
+		$("#bmilink").click(function() {
+			$("#bmidialog").dialog("open");
+				return false;
+		});
+
+				$("#birthcontroldialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#birthcontrollink").click(function() {
+                	$("#birthcontroldialog").dialog("open");
+                	return false;
+                });
+
+				$("#godindialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#godinlink").click(function() {
+                	$("#godindialog").dialog("open");
+                	return false;
+                });
+
+				$("#strendialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#strenlink").click(function() {
+                	$("#strendialog").dialog("open");
+                	return false;
+                });
+
+				$("#moderatedialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#moderatelink").click(function() {
+                	$("#moderatedialog").dialog("open");
+                	return false;
+                });
+
+				$("#milddialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#mildlink").click(function() {
+                	$("#milddialog").dialog("open");
+                	return false;
+                });
+
+				$("#dietdialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#dietlink").click(function() {
+                	$("#dietdialog").dialog("open");
+                	return false;
+                });
+
+				$("#exercisedialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#exerciselink").click(function() {
+                	$("#exercisedialog").dialog("open");
+                	return false;
+                });
+
+				$("#obesitydialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#obesitylink").click(function() {
+                	$("#obesitydialog").dialog("open");
+                	return false;
+                });
+
+				$("#alcoholdialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#alcohollink").click(function() {
+                	$("#alcoholdialog").dialog("open");
+                	return false;
+                });
+
+				$("#tobaccodialog").dialog ({
+                	autoOpen: false,
+                	width: 1000
+                });
+				$("#tobaccolink").click(function() {
+                	$("#tobaccodialog").dialog("open");
+                	return false;
+                });
+				
+
+				$("#alc_a1").buttonset();
+				$("#alc_a2").buttonset();
+				$("#alc_a3").buttonset();
+				$("#smk_q1").buttonset();
+				$("#ex_q2").buttonset();
+				$("#birthcontrol_q").buttonset(); 
+				
+				//$("#obesitylink").button();
+				//$("#obesitylink").addClass( "button-pink" );
+
+				$("#calcbmi").button();
+				$("#calcbmi").click(function() {
+					//bmi = weight(kg) / height(m)^2
+					//1 pound = 0.45359237 kilograms
+					//1 inch = 0.0254 meters
+					var weight = $("#weighttext").val() * 0.45359237;
+					var height = parseInt($("#heighttext_ft").val()) * 12 + parseInt($("#heighttext_in").val());
+					height *= 0.0254;
+
+					var bmival = weight / (height * height);
+					bmival = Math.round(bmival*10)/10;
+
+					var lweight = 18.5 * height * height;
+					lweight /= 0.45359237;
+					lweight = Math.round(lweight);
+					var hweight = 24.9 * height * height;
+					hweight /= 0.45359237;
+					hweight = Math.round(hweight);
+
+					var bmi = document.getElementById( "bmi" );
+					bmi.innerHTML = bmival + "<br /> For your height, you ideally want to weigh between <strong>" + lweight + "</strong> and <strong>" + hweight + "</strong> pounds to be in a healthy weight range.";
+
+					if( bmival < 18.5 )
+					{
+						//$("#bmi0").addClass("highlight");
+						$("#bmi0").addClass("ui-widget-header ui-corner-all");
+					}
+					else if ( bmival >= 18.5 && bmival < 25)
+					{
+						//$("#bmi1").addClass("highlight");
+						$("#bmi1").addClass("ui-widget-header ui-corner-all");
+					}
+					else if ( bmival >= 25 && bmival < 30)
+					{
+						//$("#bmi2").addClass("highlight");
+						$("#bmi2").addClass("ui-widget-header ui-corner-all");
+					}
+					else if ( bmival >= 30 )
+					{
+						//$("#bmi3").addClass("highlight");
+						$("#bmi3").addClass("ui-widget-header ui-corner-all");
+					}
+
+					if (typeof(SMART) != "undefined")
+					{
+						//Add to database
+						var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addbmi&id=" + SMART.record.id + "&height=" + height + "&weight=" + weight + "&bmi=" + bmival;
+
+						$.getJSON(url, function(data) {
+						}); //$.getJSON()
+					}
+
+				});
+
+				$("#birthcontrol_q_0").click(function() {
+
+					if (typeof(SMART) != "undefined")
+					{
+						var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addthepill&id=" + SMART.record.id + "&thepill=1";
+
+						$.getJSON(url, function(data) {
+						});
+					}
+				});
+
+				$("#birthcontrol_q_1").click(function() {
+
+					if (typeof(SMART) != "undefined")
+					{
+						var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addthepill&id=" + SMART.record.id + "&thepill=0";
+
+						$.getJSON(url, function(data) {
+						});
+					}
+				});
+
+				$("#calcgodin").button();
+				$("#calcgodin").click(function() {
+					var strenuous = $("#strenuousex").val();
+					var moderate = $("#moderateex").val();
+					var mild = $("#mildex").val();
+					var seven = 0;					
+					if ($("#ex_q2_0").attr("checked") == true)
+					{					
+						seven = 1;
+					}
+					else if ($("#ex_q2_1").attr("checked") == true)
+					{
+						seven = 2;
+					}
+					else if ($("#ex_q2_2").attr("checked") == true)
+					{
+						seven = 3;
+					}
+
+					var score = strenuous * 9 + moderate * 5 + mild * 3;
+
+					var godin = document.getElementById( "godinscore" );
+					godin.innerHTML = score + " arbitrary units (higher is better)";
+
+					if (typeof(SMART) != "undefined")
+					{
+						//Send it to the database
+						var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addgodin&id=" + SMART.record.id + "&stren=" + strenuous + "&mod=" + moderate + "&mild=" + mild + "&godin=" + score + "&seven=" + seven;
+
+						//alert(url);
+
+						$.getJSON(url, function(data) {
+						}); //$.getJSON()
+					}
+				}); //$("#calcgodin").click()
+
+	
+				$("#smk_q1").click(function() {
+
+					if (typeof(SMART) != "undefined")
+					{
+						var smoke = 0;
+						if ($("#smk_a1_0").attr("checked") == true)
+						{
+							smoke = 1;
+						}
+						else if ($("#smk_a1_1").attr("checked") == true)
+						{
+							smoke = 2;
+						}
+
+						var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addtobacco&id=" + SMART.record.id + "&smoke=" + smoke;
+
+						$.getJSON(url, function(data) {
+						});
+					}
+
+				}); //$("#smk_q1").click()
+
+		
+			});
+
+			function exq1( choice )
+			{
+				if (typeof(SMART) != "undefined")
+				{
+					var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addalcohol&id=" + SMART.record.id + "&alc1=" + choice;
+
+					$.getJSON(url, function(data){
+					});
+				}
+			}
+
+			function exq2( choice )
+			{
+				if (typeof(SMART) != "undefined")
+				{
+					var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addalcohol&id=" + SMART.record.id + "&alc2=" + choice;
+
+					//alert(url);
+
+					$.getJSON(url, function(data){
+					});
+				}
+			}
+
+			function exq3( choice )
+			{
+				if (typeof(SMART) != "undefined")
+				{
+					var url = "http://web.cip.gatech.edu/~preventbc/plan.php?action=addalcohol&id=" + SMART.record.id + "&alc3=" + choice;
+
+					$.getJSON(url, function(data){
+					});
+				}
+			}
+
+		</script>
+		<style>
+		#alc_q1 {
+			padding: 10px 4px;
+		}
+		
+		#alc_q2 {
+			padding: 10px 4px;
+		}
+
+		#alc_q3 {
+			padding: 10px 4px;
+		}
+
+		.highlight {
+			background-color: yellow;
+		}
+		</style>
+
+		<h2 class="demoHeaders">My Plan</h2>
+
+		<div id="planaccordion">
+
+			<div>
+				<h3><a href="#">My Information</a></h3>
+				<div>
+					<a href="#obesitydialog" id="obesitylink" style="text-decoration: none;"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Obesity increases your risk of breast cancer</div></a><br /><br />
+
+					<a href="" id="bmilink">BMI Calculation</a><br /><br />
+					
+					<div class="ui-widget-header ui-corner-all" style="float: left;">
+						<table>
+							<tr>
+								<td>
+									<label for="heighttext">Please enter your height:  </label>
+								</td>
+								<td>
+									<input type="text" name="heighttext_ft" id="heighttext_ft" style="width: 3em;" />&nbsp;ft. <input type="text" name="heighttext_in" id="heighttext_in" style="width: 3em;" />&nbsp;in.<br />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="weighttext">Please enter your weight:  </label>
+								</td>
+								<td>
+									<input type="text" name="weighttext" id="weighttext" style="width: 3em;" />&nbsp;lbs.<br />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<br /><br /><br /><br />
+					
+					<button id="calcbmi">Calculate BMI</button>
+					<span id="bmi"></span>
+
+					<br /><br />
+
+			      <table style="width:400px; border-width:0;" class="ui-widget-header ui-corner-all ui-state-active">
+				    <caption style="text-align: left; color: black;">BMI for adults age 20 and older</caption>
+				    <tr>
+				      <td><strong>BMI</strong></td>
+				      <td><strong>Classification</strong></td>
+				    </tr>
+				    <tr id="bmi0">
+				      <td>&lt;18.5</td>
+				      <td>underweight</td>
+				    </tr>
+				    <tr id="bmi1">
+				      <td>18.5 to 24.9</td>
+				      <td>healthy</td>
+				    </tr>
+				    <tr id="bmi2">
+				      <td>25.0 to 29.9</td>
+				      <td>overweight</td>
+				    </tr>
+				    <tr id="bmi3">
+				      <td>&gt;30.0</td>
+				      <td>obese</td>
+				    </tr>
+				  </table>
+
+				  <p><i>National Heart, Lung, and Blood Institute. 1998. Clinical Guidelines on the Identification, Evaluation, and Treatment of Overweight and Obesity in Adults. NIH Publication No. 98–4083. Bethesda, MD.</i></p>
+
+				  <br />
+				  <p><a href="#birthcontroldialog" id="birthcontrollink" style="text-decoration: none; color: white;"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Oral contraceptives increase your risk of breast cancer</div></a></p>
+				<br /><br /> 
+
+				<p>Do you currently take (or have taken within the past 10 years) oral contraceptives?</P>
+				  
+				  <span id="birthcontrol_q">
+                    <input type="radio" id="birthcontrol_q_0" name="birthcontrol_q" /><label for="birthcontrol_q_0">Yes</label>
+			        <input type="radio" id="birthcontrol_q_1" name="birthcontrol_q" /><label for="birthcontrol_q_1">No</label>
+			      </span> <!-- /birthcontrol_q -->
+
+			    </div> <!-- /myinfo inner -->
+			</div> <!-- /myinfo -->
+
+			<div id="obesitydialog" title="Obesity">
+				<p>Being overweight or obese has been found to increase breast cancer risk, especially for women after menopause. Before menopause your ovaries produce most of your estrogen, and fat tissue produces a small amount of estrogen. After menopause (when the ovaries stop making estrogen), most of a woman's estrogen comes from fat tissue. Having more fat tissue after menopause can increase your chance of getting breast cancer by raising estrogen levels. Also, women who are overweight tend to have higher blood insulin levels. Higher insulin levels have also been linked to some cancers, including breast cancer.</p>
+
+<p>But the connection between weight and breast cancer risk is complex. For example, the risk appears to be increased for women who gained weight as an adult but may not be increased among those who have been overweight since childhood. Also, excess fat in the waist area may affect risk more than the same amount of fat in the hips and thighs. Researchers believe that fat cells in various parts of the body have subtle differences that may explain this.</p>
+
+<p>The American Cancer Society recommends you maintain a healthy weight throughout your life by balancing your food intake with physical activity and avoiding excessive weight gain.</p>
+				<p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+			</div> <!-- /obesitydialog -->
+
+			<div id="bmidialog" title="Body Mass Index (BMI)">
+				  <p>A measure of body fat based on height and weight that applies to adult men and women.</p>
+			      <p><i>BMI = weight (kg) / height<sup>2</sup> (m<sup>2</sup>)</i></p>
+				  <p>http://www.nhlbisupport.com/bmi/</p>
+			</div> <!-- /bmidialog -->
+
+			<div>
+			  <h3><a href="#">My Diet</a></h3>
+			    <div>
+			      <a href="#dietdialog" id="dietlink" style="text-decoration: none;"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Diet's effect on breast cancer</div></a><br /><br />
+			    </div> <!-- /mydiet inner -->
+			</div> <!-- /mydiet -->
+
+			<div id="dietdialog" title="Diet">
+				  <p>Many studies have looked for a link between certain diet and breast cancer risk, but so far the results have been conflicting. Some studies have indicated that diet may play a role, while others found no evidence that diet influences breast cancer risk. Studies have looked at the amount of fat in the diet, intake of fruits and vegetables, and intake of meat. No clear link to breast cancer risk was found. Studies have also looked at vitamin levels, again with inconsistent results. Some studies actually found an increased risk of breast cancer in women with higher levels of certain nutrients. Also, so far, no study has shown that taking vitamins reduces breast cancer risk. This is not to say that there is no point in eating a healthy diet. A diet low in fat, low in red meat and processed meat, and high in fruits and vegetables may have other health benefits.</p>
+
+<p>Most studies have found that breast cancer is less common in countries where the typical diet is low in total fat, low in polyunsaturated fat, and low in saturated fat. On the other hand, many studies of women in the United States have not found breast cancer risk to be related to dietary fat intake. Researchers are still not sure how to explain this apparent disagreement. It may be at least partly due to the effect of diet on body weight (see below). Also, studies comparing diet and breast cancer risk in different countries are complicated by other differences (like activity level, intake of other nutrients, and genetic factors) that might also change breast cancer risk.</p>
+
+<p>More research is needed to better understand the effect of the types of fat eaten on breast cancer risk. But it is clear that calories do count, and fat is a major source of these. High-fat diets can lead to being overweight or obese, which is a breast cancer risk factor. A diet high in fat has also been shown to influence the risk of developing several other types of cancer, and intake of certain types of fat is clearly related to heart disease risk.</p>
+
+<p>The American Cancer Society recommends eating a healthy diet with an emphasis on plant sources. This includes eating 5 or more servings of vegetables and fruits each day, choosing whole grains over those that are processed (refined), and limiting consumption of processed and red meats.</p>
+				<p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+			</div> <!-- /dietdialog -->	
+
+			<div id="birthcontroldialog" title="Oral Contraceptives">
+				  <p>Studies have found that women using oral contraceptives (birth control pills) have a slightly greater risk of breast cancer than women who have never used them. This risk seems to decline back to normal over time once the pills are stopped. Women who stopped using oral contraceptives more than 10 years ago do not appear to have any increased breast cancer risk. When thinking about using oral contraceptives, women should discuss their other risk factors for breast cancer with their health care team.</p>
+				  <p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+			</div> <!-- /birthcontroldialog -->
+
+			<div>
+			  <h3><a href="#">My Exercise</a></h3>
+			    <div>
+			      <a href="#exercisedialog" id="exerciselink" style="text-decoration: none;"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Physical activity reduces your risk of breast cancer</div></a><br /><br />
+
+			      <a href="#godindialog" id="godinlink">Calculate Godin-Shephard score</a>
+			      <p>Please answer these questions about your exercise habits:</p>
+
+			      <p>1. Considering a 7-day period (a week) how many times on the average do you do the following kinds of exercise for more than 15 minutes during your free time?</p>
+
+				<!--<div style="padding: 0.5em; float: left;" id="stren_ex_bar" class="ui-widget-header ui-corner-all">
+					<label for="strenuousex"><a href="#strendialog" id="strenlink">Strenuous exercise</a> (heart beats rapidly):</label><input type="text" name="strenuousex" id="strenuousex" style="width: 3em;" />&nbsp;times a week<br />
+				</div><br /><br /><br />
+
+				<div style="padding: 0.5em; float: left;" id="moderate_ex_bar" class="ui-widget-header ui-corner-all">
+					<label for="moderateex"><a href="#moderatedialog" id="moderatelink">Moderate exercise</a> (not exhausting):</label><input type="text" name="moderateex" id="moderateex" style="width: 3em;" />&nbsp;times a week<br />
+				</div><br /><br /><br />
+
+				<div style="padding: 0.5em; float: left;" id="mild_ex_bar" class="ui-widget-header ui-corner-all">
+					<label for="mildex"><a href="milddialog" id="mildlink">Mild exercise</a> (minimal effort):</label><input type="text" name="mildex" id="mildex" style="width: 3em;" />&nbsp;times a week<br />
+				</div><br /><br /><br />-->
+				
+				
+				
+				<table class="ui-widget-header ui-corner-all">
+				
+					<tr>
+						<td>
+							<label for="strenuousex"><a href="#strendialog" id="strenlink">Strenuous exercise</a> (heart beats rapidly):</label>
+						</td>
+						<td>
+							<input type="text" name="strenuousex" id="strenuousex" style="width: 3em;" />&nbsp;times a week
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<label for="moderateex"><a href="#moderatedialog" id="moderatelink">Moderate exercise</a> (not exhausting):</label>
+						</td>
+						<td>
+							<input type="text" name="moderateex" id="moderateex" style="width: 3em;" />&nbsp;times a week
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<label for="mildex"><a href="milddialog" id="mildlink">Mild exercise</a> (minimal effort):</label>
+						</td>
+						<td>
+							<input type="text" name="mildex" id="mildex" style="width: 3em;" />&nbsp;times a week
+						</td>
+					</tr>
+					
+				</table>
+				
+			      <p>2. Considering a 7-day period (a week) during your leisure time how often do you engage in any regular activity long enough to work up a sweat (heart beats rapidly)?</p>
+
+			      <span id="ex_q2">
+                    <input type="radio" id="ex_q2_0" name="ex_q2" /><label for="ex_q2_0">Often</label>
+			        <input type="radio" id="ex_q2_1" name="ex_q2" /><label for="ex_q2_1">Sometimes</label>
+			        <input type="radio" id="ex_q2_2" name="ex_q2" /><label for="ex_q2_2">Never or rarely</label>
+			      </span> <!-- /ex_q2 -->
+
+			      <br /><br />
+
+			      <button id="calcgodin">Calculate Godin-Shephard Score</button>
+			      <span id="godinscore"></span>
+
+			      <br /><br />
+				
+			      <p><i>Godin G., Shephard R.J. A simple method to assess exercise behavior in the community. Can J Applied Sport Sciences. 1985; 10: 141-146.</i></p>
+			    </div> <!-- /myexercise inner -->
+			</div> <!-- /myexercise -->	
+
+			<div id="godindialog" title="Godin-Shephard Score">
+				  <p>Godin and Shephard developed a simple questionniare to measure a person's leisure time exercise. It was designed to be reliable valid and easy to complete quickly without a need for detailed review. This can be used to monitor the impact of health and physical fitness promotion programs in the community.</p>
+				  <p><i>https://www.cebp.nl/vault_public/filesystem/?ID=1378</i></p>
+			</div> <!-- /godindialog -->
+
+			<div id="strendialog" title="Strenuous Exercise (9 METS)">
+			  <ul>
+			    <li>Running</li>
+			    <li>Jogging</li>
+			    <li>Hockey</li>
+			    <li>Football</li>
+			    <li>Soccer</li>
+			    <li>Squash</li>
+			    <li>Basketball</li>
+			    <li>Cross country skiing</li>
+			    <li>Judo</li>
+			    <li>Roller skating</li>
+			    <li>Vigorous swimming</li>
+			    <li>Vigorous long distance bicycling</li>
+		       </ul>
+			   <p>https://www.cebp.nl/vault_public/filesystem/?ID=1378</p>
+			</div> <!-- /strendialog -->
+
+			<div id="moderatedialog" title="Moderate Exercise (5 METS)">
+			  <ul>
+			    <li>Fast walking</li>
+			    <li>Baseball</li>
+			    <li>Tennis</li>
+			    <li>Easy bicylcing</li>
+			    <li>Volleyball</li>
+			    <li>Badminton</li>
+			    <li>Easy Swimming</li>
+			    <li>Alpine Skiing</li>
+			    <li>Popular and folk dancing</li>
+			  </ul>
+			  <p>https://www.cebp.nl/vault_public/filesystem/?ID=1378</p>
+			</div> <!-- /moderatedialog -->
+
+			<div id="milddialog" title="Mild Exercise (3 METS)">
+			  <ul>
+			    <li>Yoga</li>
+			    <li>Archery</li>
+			    <li>Fishing from river bank</li>
+			    <li>Bowling</li>
+			    <li>Horseshoes</li>
+			    <li>Golf</li>
+			    <li>Snow mobiling</li>
+			    <li>Easy walking</li>
+			  </ul>
+			  <p>https://www.cebp.nl/vault_public/filesystem/?ID=1378</p>
+			</div> <!-- /milddialog -->
+
+			<div id="exercisedialog" title="Physical Activity">
+				  <p>Evidence is growing that physical activity in the form of exercise reduces breast cancer risk. The main question is how much exercise is needed. In one study from the Women's Health Initiative (WHI) as little as 1.25 to 2.5 hours per week of brisk walking reduced a woman's risk by 18%. Walking 10 hours a week reduced the risk a little more.</p>
+
+<p>To reduce your risk of breast cancer, the American Cancer Society recommends 45 to 60 minutes of intentional physical activity 5 or more days a week.</p>
+				  <p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+			</div> <!-- /exercisedialog -->
+
+			<div>
+			  <h3><a href="#">My Alcohol Consumption</a></h3>
+			    <div>
+			      <a href="#alcoholdialog" id="alcohollink" style="text-decoration: none"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Alcohol consumption increases your risk of breast cancer</div></a>
+
+				<br /><br />
+				  
+			      <p>Please answer these questions about your alcohol consumption:</p>
+
+				<span id="alc_q1" class="ui-widget-header ui-corner-all">
+					1. How often do you have a drink containing alcohol?				
+				</span> <!-- /alc_q1 -->
+				  
+				<br /><br />
+				<span id="alc_a1">
+			        
+					<input type="radio" id="alc_a1_0" name="alc_a1" onclick="exq1(0);" /><label for="alc_a1_0">Never</label>
+					<input type="radio" id="alc_a1_1" name="alc_a1" /onclick="exq1(1);"><label for="alc_a1_1">Monthly or less</label>
+					<input type="radio" id="alc_a1_2" name="alc_a1" /onclick="exq1(2);"><label for="alc_a1_2">2 to 4 times a month</label>
+					<input type="radio" id="alc_a1_3" name="alc_a1" /onclick="exq1(3);"><label for="alc_a1_3">2 to 3 times a week</label>
+					<input type="radio" id="alc_a1_4" name="alc_a1" /onclick="exq1(4);"><label for="alc_a1_4">4 or more times a week</label>
+
+				</span> <!-- /alc_a1 -->
+
+				<br /><br /><br />
+
+				<span id="alc_q2" class="ui-widget-header ui-corner-all">
+					2. How many drinks containing alcohol do you have on a typical day when you are drinking?
+				</span> <!-- /alc_q2 -->
+
+				<br /><br />
+				
+				<span id="alc_a2">
+			        
+					<input type="radio" id="alc_a2_0" name="alc_a2" /onclick="exq2(0);"><label for="alc_a2_0">1 or 2</label>
+					<input type="radio" id="alc_a2_1" name="alc_a2" /onclick="exq2(1);"><label for="alc_a2_1">3 or 4</label>
+					<input type="radio" id="alc_a2_2" name="alc_a2" /onclick="exq2(2);"><label for="alc_a2_2">5 or 6</label>
+					<input type="radio" id="alc_a2_3" name="alc_a2" /onclick="exq2(3);"><label for="alc_a2_3">7 to 9</label>
+					<input type="radio" id="alc_a2_4" name="alc_a2" /onclick="exq2(4);"><label for="alc_a2_4">10 or more</label>
+
+				</span> <!-- /alc_a2 -->	
+				  
+				  
+				<br /><br /><br />
+
+				<span id="alc_q3" class="ui-widget-header ui-corner-all">
+					3. How often do you have more than five or more drinks on one occasion?
+				</span> <!-- /alc_q3 -->
+
+				<br /><br />
+				
+				<span id="alc_a3">
+			        
+					<input type="radio" id="alc_a3_0" name="alc_a3" /onclick="exq3(0);"><label for="alc_a3_0">Never</label>
+					<input type="radio" id="alc_a3_1" name="alc_a3" /onclick="exq3(1);"><label for="alc_a3_1">Less than monthly</label>
+					<input type="radio" id="alc_a3_2" name="alc_a3" /onclick="exq3(2);"><label for="alc_a3_2">Monthly</label>
+					<input type="radio" id="alc_a3_3" name="alc_a3" /onclick="exq3(3);"><label for="alc_a3_3">Weekly</label>
+					<input type="radio" id="alc_a3_4" name="alc_a3" /onclick="exq3(4);"><label for="alc_a3_4">Daily or almost daily</label>
+
+				</span> <!-- /alc_a3 -->
+				
+				<br /><br /><br />
+
+				<p><i>Reinert, Duane F & Allen, John P. The Alcohol Use Disorders Identification Test: An Update of Research Findings. Alcoholism: Clinical and Experimental Research 31, No 2: 185-199, 2007.</i></p>
+
+
+				</div> <!-- /myalcohol inner -->
+			</div> <!-- /myalcohol -->
+
+			<div id="alcoholdialog" title="Alcohol Consumption">
+				  <p>The use of alcohol is clearly linked to an increased risk of developing breast cancer. The risk increases with the amount of alcohol consumed. Compared with non-drinkers, women who consume 1 alcoholic drink a day have a very small increase in risk. Those who have 2 to 5 drinks daily have about 1½ times the risk of women who drink no alcohol. Excessive alcohol use is also known to increase the risk of developing cancers of the mouth, throat, esophagus, and liver. The American Cancer Society recommends that women limit their consumption of alcohol to no more than one drink a day.</p>
+				  <p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+				  <p>In 2007, the International Agency for Research on Cancer concluded that there was sufficient evidence that alcohol consumption causes breast cancer in women. A meta-analysis of more than 40 epidemiologic studies suggests that the equivalent of 2 drinks a day (or 24g of alcohol) may increase breast cancer risk by 21%. Recent studies have also reported that even low to moderate alcohol consumption (3-14 drinks per week) is associated with a slight increase in the risk of breast cancer. The increased risk is dose-dependent and exists regardless Breast Cancer Facts & Figures 2009-2010 of the type of alcoholic beverage consumed. One of the most likely mechanisms by which alcohol increases risk of breast cancer is by increasing estrogen and androgen levels. Thus, reducing alcohol intake may be a useful strategy for reducing breast cancer risk among regular consumers of alcohol.</p>
+				  <p><i>American Cancer Society. Breast Cancer Facts & Figures 2009-2010. Atlanta: American Cancer Society, Inc.</i></p>
+			</div> <!-- /alcoholdialog -->
+
+			<div>
+				<h3><a href="#">My Tobacco Smoke</a></h3>
+				<div>
+			      <a href="#tobaccodialog" id="tobaccolink" style="text-decoration: none;"><div class="button-pink ui-corner-all" style="float: left; padding: 0.5em;">Tobacco smoke's effect on breast cancer risk</div></a><br /><br />
+				  Do you smoke?
+				  <span id=smk_q1>
+				    <input type="radio" id="smk_a1_0" name="smk_a1" /><label for="smk_a1_0">Yes</label>
+			        <input type="radio" id="smk_a1_1" name="smk_a1" /><label for="smk_a1_1">No</label>
+				  </span> <!-- /smk_q1 -->
+				  
+				</div> <!-- /mytobacco inner -->
+			</div> <!-- /mytobacco -->
+
+			<div id="tobaccodialog" title="Tobacco Use">
+				  <p>Most studies have found no link between cigarette smoking and breast cancer. Some studies have suggested smoking increases the risk of breast cancer, but this remains controversial.</p>
+
+<p>An active focus of research is whether secondhand smoke increases the risk of breast cancer. Both mainstream and secondhand smoke contain chemicals that, in high concentrations, cause breast cancer in rodents. Chemicals in tobacco smoke reach breast tissue and are found in breast milk.</p>
+
+<p>The evidence on secondhand smoke and breast cancer risk in human studies is controversial, at least in part because smokers have not been shown to be at increased risk. One possible explanation for this is that tobacco smoke may have different effects on breast cancer risk in smokers and in those who are just exposed to smoke.</p>
+
+<p>A report from the California Environmental Protection Agency in 2005 concluded that the evidence about secondhand smoke and breast cancer is "consistent with a causal association" in younger, mainly premenopausal women. The 2006 US Surgeon General's report, The Health Consequences of Involuntary Exposure to Tobacco Smoke, concluded that there is "suggestive but not sufficient" evidence of a link at this point. In any case, this possible link to breast cancer is yet another reason to avoid secondhand smoke.</p>
+				  <p><i>http://www.cancer.org/Cancer/BreastCancer/DetailedGuide/breast-cancer-risk-factors</i></p>
+			</div> <!-- /tobaccodialog -->
+
+		</div> <!-- /planaccordion -->
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title></title>
+		<link type="text/css" href="css/custom-theme/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.12.custom.min.js"></script>
+		<!--<script src="http://sample-apps.smartplatforms.org/framework/smart/scripts/smart-api-page.js"></script>-->
+		<script type="text/javascript">
+			$(function() {
+			
+				var $dialog = $("<div></div>")
+					.html("This dialog will show every time!")
+					.dialog({
+						autoOpen: false,
+						title: "Basic Dialog"
+				});
+
+				$("#opener").click(function() {
+					$dialog.dialog("open");
+					// prevent the default action, e.g., following a link
+					return false;
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		
+		<p>Tab 1</p>
+         <div class="demo">
+			<a href="" id="opener">Click Here</a>
+		</div><!-- End demo --> 
+		 
+	</body>
+</html>

@@ -1,0 +1,249 @@
+<script>
+	// Accordion
+	$("#accordion").accordion({
+		header: "h3",
+		autoHeight: false,
+		collapsible: true
+	});
+
+	// Dialogs
+	$("#ddialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+	$("#dcis").click(function() {
+		$("#ddialog").dialog("open");
+		return false;
+	});
+
+	$("#ldialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+	$("#lcis").click(function() {
+		$("#ldialog").dialog("open");
+		return false;
+	});
+
+	$("#histdialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+
+	$("#mdialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+	$("#mp").click(function() {
+		$("#mdialog").dialog("open");
+		return false;
+	});
+
+	$("#biodialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+	$("#biop").click(function() {
+		$("#biodialog").dialog("open");
+		return false;
+	});
+
+	$("#athpdialog").dialog ({
+		autoOpen: false,
+		width: 1000
+	});
+	$("#athp").click(function() {
+		$("#athpdialog").dialog("open");
+		return false;
+	});
+
+	//Radio buttons
+	$("#mh_bc").buttonset();
+	$("#mh_dc").buttonset();
+	$("#mh_lc").buttonset();
+	$("#menarcheAge").buttonset();
+	$("#ageb1c").buttonset();
+	$("#relwbc").buttonset();
+	$("#bbiopsy").buttonset();
+	$("#numbbiopsy").buttonset();
+	$("#hyperplasia").buttonset();
+	$("#raceTypes").buttonset();
+
+</script>
+
+<div id="risk">
+	<!-- Accordion -->
+	<h2 class="demoHeaders">Risk Assessment Tool</h2>
+	<div id="accordion">
+		<div>
+		<h3><a href="#">Medical history</a></h3>
+		<div>
+			Do you have a medical history of any breast cancer?
+			<span id="mh_bc">
+				<input type="radio" id="mh_bc_0" name="mh_bc" onclick="checkHistory(this)" /><label for="mh_bc_0">Yes</label>
+				<input type="radio" id="mh_bc_1" name="mh_bc" /><label for="mh_bc_1">No</label>
+			</span> <!-- /mh_bc -->
+
+			<br /><br />
+
+			Do you have a medical history of <a href="#ddialog" id="dcis">Ductal Carcinoma In Situ (DCIS)</a>?
+			<span id="mh_dc">
+				<input type="radio" id="mh_dc_0" name="mh_dc" onclick="checkHistory(this)" /><label for="mh_dc_0">Yes</label>
+				<input type="radio" id="mh_dc_1" name="mh_dc" /><label for="mh_dc_1">No</label>
+			</span> <!-- /mh_dc -->
+
+			<br /><br />
+
+			Do you have a medical history of <a href="#ldialog" id="lcis">Lobular Carcinoma In Situ (LCIS)</a>?
+			<span id="mh_lc">
+				<input type="radio" id="mh_lc_0" name="mh_lc" onclick="checkHistory(this)" /><label for="mh_lc_0">Yes</label>
+				<input type="radio" id="mh_lc_1" name="mh_lc" /><label for="mh_lc_1">No</label>
+			</span> <!-- /mh_lc -->
+
+		</div> <!-- /medicalhistory inner -->
+	
+		<div id="histdialog">
+			<p>This tool cannot calculate breast cancer risk accurately for women with a medical history of any breast cancer or of DCIS or of LCIS.</p>
+		</div> <!-- /histdialog -->
+	  
+		<div id="ddialog" title="Ductal Carcinoma In Situ (DUK-tal KAR-sih-NOH-muh in SYE-too)">
+			<p>DICS. A noninvasive condition in which abnormal cells are found in the lining of a breast duct. The abnormal cells have not spread outside the duct to other tissues in the breast. In some cases, ductal carcinoma in situ may become invasive cancer and spread to other tissues, although it is not known at this time how to predict which lesions will become invasive. Also called intraductal carcinoma.</p>
+			<p><i>http://www.cancer.gov/bcrisktool/def-dcis.html</i></p>
+		</div><!-- /ddialog -->
+	  
+		<div id="ldialog" title="Lobular Carcinoma In Situ (LOB-yoo-lar KAR-sih-NOH-muh in SYE-too)">
+			<p>LCIS. A condition in which abnormal cells are found in the lobules of the breast. LCIS seldom becomes invasive cancer; however, having lobular carcinoma in situ in one breast increases the risk of developing breast cancer in either breast.</p>
+			<p><i>http://www.cancer.gov/bcrisktool/def-lcis.html</i></p>
+		</div><!-- /ldialog -->
+	</div><!-- /medicalhistory -->
+
+	<div>
+		<h3><a href="#">Age</a></h3>
+		<div>
+			<lable for="agetext">How old are you?</label>
+			<input type="text" name="agetext" id="agetext" style="width: 3em;"/>
+			<span> years old.</span>
+		</div> <!-- /age inner -->
+	</div> <!-- /age -->
+		
+	<div>
+		<h3><a href="#">First menstrual period</a></h3>
+		<div>
+			<p>What was your age at the time of your first <a href="#mdialog" id="mp">Menstrual period</a>?</p>
+			     
+			<span id="menarcheAge">
+				<input type="radio" id="menarcheAge_0" name="menarcheAge" /><label for="menarcheAge_0">7 to 11</label>
+				<input type="radio" id="menarcheAge_1" name="menarcheAge" /><label for="menarcheAge_1">12 to 13</label>
+				<input type="radio" id="menarcheAge_2" name="menarcheAge" /><label for="menarcheAge_2">&gt;= 14</label>
+				<input type="radio" id="menarcheAge_3" name="menarcheAge" /><label for="menarcheAge_3">Unknown</label>
+			</span> <!-- /menarcheAge -->
+
+		</div> <!-- /menarcheAge inner -->
+	  
+		<div id="mdialog" title="Menstrual Period (MEN-stroo-al PEER-ee-od)">
+			<p>The periodic discharge of blood and tissue from the uterus. From puberty until menopause, menstruation occurs about every 28 days, but does not occur during pregnancy.</p>
+			<p><i>http://www.cancer.gov/bcrisktool/def-menst.html</i></p>
+		</div> <!-- /mdialog -->
+	</div> <!-- /menarche Age -->
+
+	<div>
+		<h3><a href="#">First live birth</a></h3>
+		<div>
+			<p>What your age at the time of your first live birth of a child?</p>
+
+			<span id="ageb1c">
+				<input type="radio" id="ageb1c_0" name="ageb1c" /><label for="ageb1c_0">No births</label>
+				<input type="radio" id="ageb1c_1" name="ageb1c" /><label for="ageb1c_1">&lt; 20</label>
+				<input type="radio" id="ageb1c_2" name="ageb1c" /><label for="ageb1c_2">20 to 24</label>
+				<input type="radio" id="ageb1c_3" name="ageb1c" /><label for="ageb1c_3">25 to 29</label>
+				<input type="radio" id="ageb1c_4" name="ageb1c" /><label for="ageb1c_4">&gt;= 30</label>
+				<input type="radio" id="ageb1c_5" name="ageb1c" /><label for="ageb1c_5">Unknown</label>
+			</span> <!-- /ageb1c -->
+
+		</div> <!-- /firstbirth inner -->
+	</div> <!-- /firstbirth -->
+
+	<div>
+		<h3><a href="#">First-degree relatives</a></h3>
+		<div>
+			<p>How many of your first-degree relatives - mother, sisters, daughters - have had breast cancer?</p>
+
+			<span id="relwbc">
+				<input type="radio" id="relwbc_0" name="relwbc" /><label for="relwbc_0">0</label>
+				<input type="radio" id="relwbc_1" name="relwbc" /><label for="relwbc_1">1</label>
+				<input type="radio" id="relwbc_2" name="relwbc" /><label for="relwbc_2">&gt; 1</label>
+				<input type="radio" id="relwbc_3" name="relwbc" /><label for="relwbc_3">Unknown</label>
+			</span> <!-- /relwbc -->
+
+		</div> <!-- /firstdegrelatives inner -->
+	</div> <!-- /firstdegrelatives -->
+
+	<div>
+		<h3><a href="#">Breast biopsies</a></h3>
+		<div>
+			<p>Have you ever had a breast <a href="#biodialog" id="biop">Biopsy</a>?</p>
+
+			<span id="bbiopsy">
+				<input type="radio" id="bbiopsy_0" name="bbiopsy" onclick="enableBiopsy();" /><label for="bbiopsy_0">Yes</label>
+				<input type="radio" id="bbiopsy_1" name="bbiopsy" onclick="disableBiopsy();" /><label for="bbiopsy_1">No</label>
+				<input type="radio" id="bbiopsy_2" name="bbiopsy" onclick="disableBiopsy();" /><label for="bbiopsy_2">Unknown</label>
+			</span> <!-- /bbiopsy -->
+
+			<br />
+
+			<p>How many breast biopsies (positive or negative) have you had?</p>
+
+			<span id="numbbiopsy">
+				<input type="radio" id="numbbiopsy_0" name="numbbiopsy" /><label for="numbbiopsy_0">1</label>
+				<input type="radio" id="numbbiopsy_1" name="numbbiopsy" /><label for="numbbiopsy_1">&gt; 1</label>
+			</span> <!-- /numbbiopsy -->
+				     
+			<p>Have you had at least one breast biopsy with <a href="#athpdialog" id="athp">atypical hyperplasia</a>?</p>
+				  
+			<span id="hyperplasia">
+				<input type="radio" id="hyperplasia_0" name="hyperplasia" /><label for="hyperplasia_0">Yes</label>
+				<input type="radio" id="hyperplasia_1" name="hyperplasia" /><label for="hyperplasia_1">No</label>
+				<input type="radio" id="hyperplasia_2" name="hyperplasia" /><label for="hyperplasia_2">Unknown</label>
+			</span> <!-- /hyperplasia -->
+
+		</div> <!-- /biopsy inner -->
+
+		<div id="biodialog" title="Biopsy (BY-op-see)">
+			<p>The removal of cells or tissues for examination by a pathologist. The pathologist may study the tissue under a microscope or perform other tests on the cells or tissue. When only a sample of tissue is removed, the procedure is called an incisional biopsy. When an entire lump or suspicious area is removed, the procedure is called an excisional biopsy. When a sample of tissue or fluid is removed with a needle, the procedure is called a needle biopsy, core biopsy, or fine-needle aspiration.</p>
+			<p><i>http://www.cancer.gov/bcrisktool/def-biopsy.html</i></p>
+		</div> <!-- /biodialog -->
+
+		<div id="athpdialog" title="Atypical Hyperplasia (AY-TIP-i-kul hy-per-PLAY-zha)">
+			<p>A benign (noncancerous) condition in which cells look abnormal under a microscope and are increased in number.</p>
+			<p><i>http://www.cancer.gov/bcrisktool/def-ah.html</i></p>
+		</div> <!-- /athpdialog -->
+	</div> <!-- /biopsy -->
+
+	<div>
+		<h3><a href="#">Race/Ethnicity</a></h3>
+		<div>
+			<p>What is your race/ethnicity?</p>
+
+			<span id="raceTypes">
+				<input type="radio" id="raceTypes_0" name="raceTypes" /><label for="raceTypes_0">White</label>
+				<input type="radio" id="raceTypes_1" name="raceTypes" /><label for="raceTypes_1">African American</label>
+				<input type="radio" id="raceTypes_2" name="raceTypes" /><label for="raceTypes_2">Hispanic</label>
+				<input type="radio" id="raceTypes_3" name="raceTypes" /><label for="raceTypes_3">Asian or Pacific Islander</label>
+				<input type="radio" id="raceTypes_4" name="raceTypes" /><label for="raceTypes_4">American Indian or Alaskan Native</label>
+				<input type="radio" id="raceTypes_5" name="raceTypes" /><label for="raceTypes_5">Unknown</label>
+			</span> <!-- /raceTypes -->
+
+		</div> <!-- /race inner -->
+	</div> <!-- /race -->
+
+	<br/>
+	
+	<div>
+		<input type="submit" value="Calculate Your Risk" onclick="submitRisk()">
+    </div>
+	</div> <!-- /accordion -->
+</div> <!-- /risk -->
+
+<div id="ratresults">
+	<!--<p>RAT results!</p>-->
+</div> <!-- /ratresults -->

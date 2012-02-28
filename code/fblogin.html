@@ -1,0 +1,28 @@
+ <html>
+    <head>
+      <title>PinkHealth Facebook Login Page</title>
+    </head>
+    <body>
+	  <button id="fb-login">Login with Facebook</button>
+      <div id="fb-root"></div>
+      <script src="http://connect.facebook.net/en_US/all.js"></script>
+      <script>
+         FB.init({ 
+            appId:'175243902528862', cookie:true, 
+            status:true, xfbml:true 
+         });
+		 
+		 document.getElementById('fb-login').onclick = function() {
+							FB.login(function(response) {
+								Log.info('FB.login callback', response);
+								if (response.session) {
+								Log.info('User is logged in');
+								} else {
+								Log.info('User is logged out');
+								}
+							});
+						};
+      </script>
+	  <!--<fb:login-button>Login with Facebook</fb:login-button>-->
+    </body>
+ </html>

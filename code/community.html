@@ -1,0 +1,160 @@
+		<script type="text/javascript">
+			$(function() {
+				// Accordion
+				$("#comaccordion").accordion({
+					header: "h3",
+					autoHeight: false,
+					collapsible: true
+				});
+                                //setTimeout("Reload()", 30000);
+			});
+                    /*function Reload(){
+			 location.reload();
+	            }*/
+		</script>
+
+		<div id="comaccordion">
+			  <h3><a href="#"><img src="images/facebook_logo.png" alt="facebook logo" width="20" height="20" align="top"/> Facebook</a></h3>
+			  <div>
+					<!--<a href="fblogin.html" target="_blank">Login to Facebook</a>-->
+					<script>
+						FB.init({ 
+							appId:'175243902528862', cookie:true, 
+							status:true, xfbml:true 
+						});
+					</script>
+					<fb:login-button>Login with Facebook</fb:login-button>
+			  </div><!--facebook-->
+			  <h3><a href="#"><img src="images/twitter_newbird_white.png" alt="twitter logo" width="20" height="20" align="top"/> Twitter</a></h3>
+			  <div id="Twitter"><br/>
+			        <span id="tsign">Sign in to Twitter</span>
+			        <br/>
+				<!--<span id="what">What is this?</span>-->
+			        <div id="tcontent">
+				    <span id="twitter-connect-placeholder"></span>
+			            <br/>
+			            <br/>
+			            <span id="rt"></span>
+			            <br/>
+			            <br/>
+				    <div id="tweets">
+				      <ul id="tlist" type="none"></ul>
+				    </div>
+			            <span id="twitt"></span>
+			            <br/>
+			            <div id="tbox"><span id="cal"></span></div>
+				    <br/>
+				    <br/>	    
+				</div>
+				<span id="login"></span>
+                                <script type="text/javascript">
+
+			            var otoken;
+			            var otokens;
+                                    function getBadge(url){
+				              var bcalories = null;
+					       $.getJSON(url, function(data){
+							 
+							 if(data.exists == 1){
+							     bcalories = data.badge;
+				                             var image = "<img src='images/" + data.burl + "' width='80' height='80' align='middle'/>";
+				                            $("#cal").append(image + bcalories);
+							 }
+					      });
+				             
+                                       }
+				
+				    function relative_time(time_value) {
+	                                   var values = time_value.split(" ");
+	                                   time_value = values[1] + " " + values[2] + ", " + values[5] + " " + values[3];
+	                                   var parsed_date = Date.parse(time_value);
+	                                   var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
+	                                   var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
+	                                   delta = delta + (relative_to.getTimezoneOffset() * 60);
+	  
+	                                   var r = '';
+	                                   if (delta < 60) {
+	                                       r = 'a minute ago';
+	                                   } else if(delta < 120) {
+	                                       r = 'couple of minutes ago';
+	                                   } else if(delta < (45*60)) {
+	                                       r = (parseInt(delta / 60)).toString() + ' minutes ago';
+	                                   } else if(delta < (90*60)) {
+	                                       r = 'an hour ago';
+	                                   } else if(delta < (24*60*60)) {
+	                                       r = '' + (parseInt(delta / 3600)).toString() + ' hours ago';
+	                                   } else if(delta < (48*60*60)) {
+	                                       r = '1 day ago';
+	                                   } else {
+	                                       r = (parseInt(delta / 86400)).toString() + ' days ago';
+	                                   }
+	  
+	                                   return r;
+                                      }
+				      var cburl = "http://web.cip.gatech.edu/~preventbc/badge.php?id=" + SMART.record.id;
+                                     
+                                      
+
+                                      twttr.anywhere(function (T) {
+			                  var currentUser,
+			                      screenName,
+			                      id,
+			                      profileImage,
+			                      profileImageTag;
+			                 if (T.isConnected()){
+                                             $("#tcontent").show();
+				             $("#tsign").hide();
+                                             var twitimage = "<img src='images/twitter_newbird_white.png' alt='twitter logo' width='20' height='20' align='top'/>";
+                                             $("#login").append('<button id="signout" type="button">' + twitimage + ' Sign out of Twitter</button>');
+                                             $("#signout").button();
+			                     $("#signout").bind("click", function () {
+                                                   twttr.anywhere.signOut();
+			                           location.reload();
+                                             });
+			                     currentUser = T.currentUser;
+                                             screenName = currentUser.data('screen_name');
+                                             profileImage = currentUser.data('profile_image_url');
+			                     profileImageTag = "<img src='" + profileImage + "'/>";
+                                             $('#twitter-connect-placeholder').append("Logged in as:  " + profileImageTag + " " + screenName);
+
+			                     var url = "http://twitter.com/status/user_timeline/" + screenName + ".json?count=2&callback=?";
+			                          $.getJSON(url, function(data) {
+	                                              T.linkifyUsers();
+			                               for(i=0; i < 2; i++){
+                                                         var udate = "<span class='created_at'>" + relative_time(data[i].created_at) + "</span>";
+	                                                 <!--$("#twitt").append(data[i].text + udate + " via " + data[i].source + "<br />");-->
+                                                         $("#tlist").append("<li>" + data[i].text + "<br/>" + udate + " <br/>via " + data[i].source + "</li>");
+			                                
+                                                       }
+                                                  });
+					       getBadge(cburl);
+                                               $("#rt").append("Recent Tweets:");
+					      
+                                               T("#tbox").tweetBox({
+                                                  height: 100,
+                                                  width: 540,
+				                  label: "Tweet about your progress on PinkHealth",
+                                                  defaultContent: "You are tweeting from PinkHealth: Breast Cancer Risk" + document.getElementById('cal').innerHTML
+                                               });
+					       
+			                  }
+			                  else {
+                                             $("#tcontent").hide();
+                                             T("#login").connectButton({
+			                        authComplete: function(user, bridge_code) {
+                                                   // triggered when auth completed successfully
+                                                   <!--alert(bridge_code);-->
+                                                },
+                                               signOut: function() {
+                                                  // triggered when user logs out
+                                               }
+                                             });
+			                   }
+                                      });
+
+                                </script>
+			    
+
+			  </div><!-- twitter -->
+		</div>
+
